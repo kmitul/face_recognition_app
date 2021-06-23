@@ -9,7 +9,8 @@ import os
 # from utils import *
 # from arcface import *
 # from retinaface import *
-
+import matplotlib.pyplot as plt
+from skimage import io
 
 app = Flask(__name__)
 
@@ -35,50 +36,60 @@ def upload():
         path1 = os.path.join(app.config['UPLOAD_FOLDER'], fn1)
         path2 = os.path.join(app.config['UPLOAD_FOLDER'], fn2)
 
-        files[0].save(path1)
-        files[1].save(path2)
+        file1.save(path1)
+        file2.save(path2)
 
         input_1 = io.imread(path1)
         input_2 = io.imread(path2)
 
-        preds_1 = RetinaFace.detect_faces(input_1, model = Retinamodel)
-        preds_2 = RetinaFace.detect_faces(input_2, model = Retinamodel)
-
-        op1 = preds_1['face_1']
-        op2 = preds_2['face_1']
-
-        img_crop_1 = bounding_box_cropretina(input_1,op1)
-        img_crop_2 = bounding_box_cropretina(input_2,op2)
-
-        p1 = resizingarcface(img_crop_1)
-        p2 = resizingarcface(img_crop_2)
-
-        result = verify(p1, p2,'cosine', model=arcmodel)
+        # preds_1 = RetinaFace.detect_faces(input_1, model = Retinamodel)
+        # preds_2 = RetinaFace.detect_faces(input_2, model = Retinamodel)
+        #
+        # op1 = preds_1['face_1']
+        # op2 = preds_2['face_1']
+        #
+        # img_crop_1 = bounding_box_cropretina(input_1,op1)
+        # img_crop_2 = bounding_box_cropretina(input_2,op2)
+        #
+        # p1 = resizingarcface(img_crop_1)
+        # p2 = resizingarcface(img_crop_2)
+        #
+        # result = verify(p1, p2,'cosine', model=arcmodel)
+        result = {
+            "verification": True,
+            "score": 10
+        }
 
         # SAVING THE PLOTTED IMAGE TO VISUALIZE IT
         fig = plt.figure()
 
         ax1 = fig.add_subplot(1,2,1)
         plt.axis('off')
-        plt.imshow(img1[0])
+        plt.imshow(input_1)
 
         ax2 = fig.add_subplot(1,2,2)
         plt.axis('off')
-        plt.imshow(img2[0])
+        plt.imshow(input_2)
 
-        plt.show()
+        # plt.show()
 
-        # Some logic needed to uniquely name the prediction files
-        plt.savefig('static/fig1.png')
+        # Some trivial logic to uniquely name the prediction files
+        plotname = 'result'+ fn1.split('.')[0] + fn2.split('.')[0]+'.png'
+        plt.savefig('static/plots/'+plotname)
 
         # REMOVING THE UPLOADED IMAGE AFTER THE WORK IS DONE
         os.remove(path1)
         os.remove(path2)
 
-        return render_template('pred.html', img1 = fn1, img2 = fn2, result = result)
+        return render_template('pred.html', plot = plotname, result = result)
 
     if request.method == 'GET':
         return render_template('pred.html')
+
+
+@app.route('/static/plots/<path:filename>')
+def send_plot(filename):
+    return send_from_directory('static/plots', filename)
 
 
 @app.route('/<path:filename>')
