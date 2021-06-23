@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+  <meta charset="utf-8">
+  <!-- bootstrap cdn -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+  <!-- material design bootstrap -->
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+  <title>Internship Demo</title>
+  </head>
+
+
+  <body>
+
+
+    <div class="jumbotron card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+      <div class="text-white text-center py-5 px-4">
+        <div>
+          <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Internship Project Demo - Team C</strong></h2>
+
+          <style media="screen">
+            .list-1{
+              margin: auto;
+              align-items: center;
+              list-style-position: inside;
+            }
+          </style>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container mycontent">
+
+      {% block content %}
+
+      {% endblock %}
+
+
+      <h4> Upload two photos to verify them </h4>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+<ol>
+
+          <h5> <li> Add First Image </li></h5>
+          <br>
+          <input type='file' class="joint" name='file1' />
+          <img class="joint-img" src="#" width="250px" height="300px" alt="first image" />
+          <br><br><br>
+          <h5><li>Add Second Image</li></h5>
+          <br>
+          <input type='file' class="joint" name='file2' />
+          <img class="joint-img" src="#" width="250px" height="300px" alt="second image" />
+          <hr>
+          <button type="submit" class="btn btn-primary">Verify</button>
+</ol>
+        </form>
+
+        <hr class="my-4">
+
+
+      <script type="text/javascript">
+
+
+
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                       $(input).next('.joint-img').attr('src', e.target.result);
+                   }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        }
+
+        $(".joint").change(function(){
+            readURL(this);
+        });
+
+
+      </script>
+      <!-- <script src="{{ url_for('static', filename='upload.js') }}">
+      </script> -->
+
+
+    </div>
+
+    <style media="screen">
+      .mycontent{
+        text-align: center;
+        margin: auto;
+        list-style-position: inside;
+      }
+
+      h4{
+        font-weight: bold;
+      }
+      h5{
+        font-weight: bold;
+      }
+
+    </style>
+
+  </body>
+</html>

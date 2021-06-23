@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    {% for image in images %}
+
+    <img src="{{ image }}" class="pred" style ="margin: auto">
+
+    {% endfor %}
+
+
+{% endblock %}
