@@ -1,14 +1,10 @@
-from flask import Flask, render_template, request, url_for, send_from_directory, jsonify, json
+from flask import Flask, render_template, request, url_for, send_from_directory, jsonify, json, Response, session
 from werkzeug.utils import secure_filename
 import cv2
 import numpy as np
 import time
 import os
 
-# Model Specific Imports
-# from utils import *
-# from arcface import *
-# from retinaface import *
 import matplotlib.pyplot as plt
 from skimage import io
 
@@ -22,7 +18,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/upload', methods=['GET','POST'])
+@app.route('/compare', methods=['GET','POST'])
 def upload():
     if request.method == "POST":
 
@@ -84,17 +80,30 @@ def upload():
         return render_template('pred.html', plot = plotname, result = result)
 
     if request.method == 'GET':
-        return render_template('pred.html')
+        return render_template('compare.html')
 
+######################################################################################
+from feed import WebcamFeed
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/video_stream')
+def video_stream():
+    return Response(gen(WebcamFeed()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/feed')
+def feed():
+    return render_template('stream.html')
+#######################################################################################
 
 @app.route('/static/plots/<path:filename>')
 def send_plot(filename):
     return send_from_directory('static/plots', filename)
-
-
-@app.route('/<path:filename>')
-def send_file(filename):
-    return send_from_directory('uploads/image', filename)
 
 
 if __name__ == '__main__':
@@ -106,4 +115,4 @@ if __name__ == '__main__':
     # Retinamodel = load_weights(re_model)
     # arcmodel.load_weights('models/arcface_weights.h5')
 
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=8080)
