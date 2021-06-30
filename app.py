@@ -10,8 +10,8 @@ from skimage import io
 
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = 'uploads/image'
-app._static_folder = 'static'
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads/image')
+app._static_folder = os.path.join(os.getcwd(),'static')
 
 @app.route('/')
 def index():
@@ -71,7 +71,7 @@ def upload():
 
         # Some trivial logic to uniquely name the prediction files
         plotname = 'result'+ fn1.split('.')[0] + fn2.split('.')[0]+'.png'
-        plt.savefig('static/plots/'+plotname)
+        plt.savefig(app._static_folder +'/plots/'+ plotname)
 
         # REMOVING THE UPLOADED IMAGE AFTER THE WORK IS DONE
         os.remove(path1)
@@ -103,7 +103,12 @@ def feed():
 
 @app.route('/static/plots/<path:filename>')
 def send_plot(filename):
-    return send_from_directory('static/plots', filename)
+    return send_from_directory(app._static_folder + '/plots', filename)
+
+
+@app.route('/static/bg/<path:filename>')
+def send_bg(filename):
+    return send_from_directory(app._static_folder + '/bg', filename)
 
 
 if __name__ == '__main__':
@@ -115,4 +120,4 @@ if __name__ == '__main__':
     # Retinamodel = load_weights(re_model)
     # arcmodel.load_weights('models/arcface_weights.h5')
 
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='0.0.0.0', port=80)
