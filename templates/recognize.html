@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <h4> Upload your photo for verification</h4>
+
+            <form action="/recognize" method="POST" enctype="multipart/form-data">
+
+              <h5> <li> Add your Image </li></h5>
+              <br>
+              <input type='file' class="joint" name='file' />
+              <img class="joint-img" src="#" width="250px" height="300px" alt="first image" />
+              <br><br><br>
+              <hr>
+              <button type="submit" class="btn btn-primary">Verify</button>
+
+            </form>
+
+            <hr class="my-4">
+
+
+          <script type="text/javascript">
+            function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                           $(input).next('.joint-img').attr('src', e.target.result);
+                       }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            }
+
+            $(".joint").change(function(){
+                readURL(this);
+            });
+
+
+          </script>
+
+        </div>
+
+        <style media="screen">
+          .mycontent{
+            text-align: center;
+            margin: auto;
+            list-style-position: inside;
+          }
+
+          h4{
+            font-weight: bold;
+          }
+          h5{
+            font-weight: bold;
+          }
+
+        </style>
+
+
+{% endblock %}

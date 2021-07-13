@@ -1,0 +1,32 @@
+{
+    "Awshesh": {
+        "ID": "1",
+        "Department": "R&D",
+        "Position": "AI Engineer"
+    },
+    "Aniket": {
+        "ID": "2",
+        "Department": "Technical",
+        "Position": "Deep Learning Engineer"
+    },
+    "Mitul": {
+        "ID": "3",
+        "Department": "Software",
+        "Position": "Data Scientist"
+    },
+    "Vignesh": {
+        "ID": "4",
+        "Department": "Big Data",
+        "Position": "Hadoop Engineer"
+    },
+    "Fujimoto": {
+        "ID": "5",
+        "Department": "MAC",
+        "Position": "Manager"
+    },
+    "Arai": {
+        "ID": "6",
+        "Department": "MAC",
+        "Position": "Senior Engineer"
+    }
+}

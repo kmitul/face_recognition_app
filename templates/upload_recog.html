@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h4> Upload your photo to match yourself from the database </h4>
+
+<form action="/recog" method="POST" enctype="multipart/form-data">
+
+  <ol>
+
+    <h5> Add Your Image </h5>
+    <br>
+    <input type='file' class="joint" name='file1' />
+    <img class="joint-img" src="#" width="250px" height="300px" alt="first image" />
+    <br><br><br>
+    <button type="submit" class="btn purple-gradient">Verify</button>
+
+  </ol>
+</form>
+
+<hr class="my-4">
+
+
+<script type="text/javascript">
+
+
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $(input).next('.joint-img').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $(".joint").change(function () {
+    readURL(this);
+  });
+
+
+</script>
+
+</div>
+
+<style media="screen">
+  .mycontent {
+    text-align: center;
+    margin: auto;
+    list-style-position: inside;
+  }
+
+  h4 {
+    font-weight: bold;
+  }
+
+  h5 {
+    font-weight: bold;
+  }
+</style>
+
+
+{% endblock %}

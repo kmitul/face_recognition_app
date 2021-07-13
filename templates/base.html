@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+  <meta charset="utf-8">
+  <!-- bootstrap cdn -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+  <!-- material design bootstrap -->
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+  <title>Internship Demo</title>
+  </head>
+
+
+  <body>
+<!-- url('/static/bg/bg2.jpg') -->
+    <div class="jumbotron card card-image" style="background-image: url('/static/bg/bg2.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover; ">
+      <div class="text-white text-center py-5 px-4">
+        <div>
+          <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Internship Project Demo - Team C</strong></h2>
+
+          <style media="screen">
+            .list-1{
+              margin: auto;
+              align-items: center;
+              list-style-position: inside;
+            }
+          </style>
+
+        <a href="/team"><button type="button" class="btn peach-gradient">Team</button> </a>
+        <a href="/"><button type="button" class="btn peach-gradient">Home</button> </a>
+        <!-- <a href="/"><button type="button" class="btn peach-gradient">Mentors</button> </a> -->
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container mycontent">
+
+     
+      {% block content %}
+
+      {% endblock %}
+
+
+    </div>
+
+    <style media="screen">
+      .mycontent{
+        text-align: center;
+        margin: auto;
+        list-style-position: inside;
+      }
+
+      h4{
+        font-weight: bold;
+      }
+      h5{
+        font-weight: bold;
+      }
+
+    </style>
+
+  </body>
+
+<!-- Footer -->
+<footer class="page-footer font-small pt-4 bottom purple-gradient" >
+
+  <!-- Footer Elements -->
+  <div class="container">
+
+    <!-- Social buttons -->
+    <ul class="list-unstyled list-inline text-center">
+      <li class="list-inline-item">
+        <a class="btn-floating btn-fb mx-1">
+          <i class="fab fa-facebook-f"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-tw mx-1">
+          <i class="fab fa-twitter"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-gplus mx-1">
+          <i class="fab fa-google-plus-g"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-li mx-1">
+          <i class="fab fa-linkedin-in"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-dribbble mx-1">
+          <i class="fab fa-dribbble"> </i>
+        </a>
+      </li>
+    </ul>
+    <!-- Social buttons -->
+
+  </div>
+  <!-- Footer Elements -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2021 Copyright:
+    <a href="/">TEAM C</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+</html>

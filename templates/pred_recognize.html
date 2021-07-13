@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if result['employee'][0] == "UI" %}
+
+      <div class="alert alert-danger" role="alert">
+        <strong> We're Sorry! We are not able to recognize you! </strong>
+      </div>
+
+    {% else %}
+
+    {% if result['employee'][0] %}
+      
+    {% if result['mask'][0] == "Mask"%}
+
+    <hr>
+      <div class="alert alert-warning" role="alert">
+        <strong> Your face was not recognized! Please remove your mask and try again! </strong>
+      </div>
+    <hr>
+
+    {% else %}
+
+    <hr>
+      <div class="alert alert-success" role="alert">
+        <strong> Welcome, {{ result['employee'][0] }}! You have been successfully verified! </strong>
+      </div>
+    <hr>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col"><img src="static/results/{{plot}}" alt="" height="250px" width="225px"></div>
+
+
+        <div class="col">
+          <strong>
+          <div class="progress md-progress">
+            <div class="progress-bar bg-success" role="progressbar" style="color : black; width: {{ result['emotions'][0]['emotion']['happy'] }}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">HAPPY({{ result['emotions'][0]['emotion']['happy'] }}%)</div>
+          </div>
+          <br>
+          <div class="progress md-progress">
+              <div class="progress-bar bg-info" role="progressbar" style="color : black; width: {{ result['emotions'][0]['emotion']['sad'] }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">SAD({{ result['emotions'][0]['emotion']['sad'] }}%)</div>
+          </div>
+          <br>
+          <div class="progress md-progress">
+              <div class="progress-bar bg-warning" role="progressbar" style="color : black; width: {{ result['emotions'][0]['emotion']['angry'] }}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">ANGRY({{ result['emotions'][0]['emotion']['angry'] }}%)</div>
+          </div>
+          <br>
+          <div class="progress md-progress">
+              <div class="progress-bar bg-primary" role="progressbar" style="color : black; width: {{ result['emotions'][0]['emotion']['neutral'] }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">NEUTRAL({{ result['emotions'][0]['emotion']['neutral'] }}%)</div>
+          </div>
+          <br>
+          <div class="progress md-progress">
+              <div class="progress-bar bg-secondary" role="progressbar" style="color : black; width: {{ result['emotions'][0]['emotion']['disgust'] }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">DISGUST({{ result['emotions'][0]['emotion']['disgust'] }}%)</div>
+          </div>
+          <br>
+          <div class="progress md-progress">
+              <div class="progress-bar bg-warning" role="progressbar" style="color : black; width: {{ result['emotions'][0]['emotion']['fear'] }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">FEAR({{ result['emotions'][0]['emotion']['fear'] }}%)</div>
+          </div>
+          <br>
+          <div class="progress md-progress">
+              <div class="progress-bar bg-info" role="progressbar" style="color : black; width: {{ result['emotions'][0]['emotion']['surprise'] }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">SURPRISE({{ result['emotions'][0]['emotion']['surprise'] }}%)</div>
+          </div>
+         </strong>
+        </div>
+
+        <div class="w-100"></div>
+
+        <div class="col alert alert-primary"><strong>{{result["employee"][0]}} - Age: {{result["age"][0]}} - {{result["mask"][0]}} </strong></div>
+        <div class="col alert alert-warning">MOOD: <strong style="text-transform: uppercase;">{{result["emotions"][0]["dominant_emotion"]}}</strong></div>
+
+
+      </div>
+    </div>
+
+    {% endif %}
+
+    {% else %}
+      <div class="alert alert-danger" role="alert">
+        <strong> Verification Failed! </strong>
+      </div>
+    
+    {% endif %}
+
+
+  
+    <br>
+  
+
+
+    {% endif %}
+    <hr>
+    <a href="/capture"> <button type="button" name="button" class="btn blue-gradient">Click here to try again</button> </a>
+    <hr>
+
+{% endblock %}
