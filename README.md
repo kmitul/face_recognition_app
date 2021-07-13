@@ -1,5 +1,11 @@
 # Face Recognition App
 
+A versatile web application build using state of the art Face detection and recognition AI, providing you with following features :  
+
+- [:heavy_check_mark:] Face verification 
+- [:heavy_check_mark:] Face matching in the database
+- [:heavy_check_mark:] Attendence Marking 
+
 ## Overview
 
 
@@ -41,6 +47,17 @@ gdown --id 1atHsxw9XE1oxeipr008EkImy5n6-K-NR
 Alternatively, the link to the same is given below:
 ```
 https://drive.google.com/file/d/1atHsxw9XE1oxeipr008EkImy5n6-K-NR/view?usp=sharing
+```
+
+### Age Model
+
+Run the following command:
+```
+gdown --id 1X5c_SGcOEhfrSjvGaIYqtQk0J0sG80xu
+```
+Alternatively, the link to the same is given below:
+```
+https://drive.google.com/file/d/1X5c_SGcOEhfrSjvGaIYqtQk0J0sG80xu/view?usp=sharing
 ```
 
 ### Emotion Recogntion Model
