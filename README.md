@@ -8,8 +8,23 @@ A versatile web application build using state of the art Face detection and reco
 
 ## Overview
 
+This was the project mainly aimed to construct a robust face recognition application with wide applications using state of the art facial detection and recognition techniques. 
+We have implemented various modules that construct the whole system, these modules are the following :
 
-## Download Model Weights
+1. Face analysis module 
+2. Web-Application module
+3. Database Module  
+
+# Setup 
+
+Run following commands in terminal opened in the project directory to run the app.
+
+Create a new virtual environment and install the required packages : 
+```
+pip install -r requirements.txt
+```
+
+## Download Pretrained Model Weights
 
 Download the weights from the google drive link below and save them into pipeline/weights directory before running the code.
 
@@ -73,14 +88,7 @@ https://drive.google.com/file/d/1YPrAuQ1_CpVhloXXXa8QuTrFk5KE76Id/view?usp=shari
 
 ## How to use
 
-Run following commands in terminal opened in the project directory to run the app.
-
-- Create a new virtual environment and install the required packages
-```
-pip install -r requirements.txt
-```
-
-- Run the app
+Run the app : 
 ```
 python app.py
 ```
