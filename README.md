@@ -1,3 +1,6 @@
+
+
+
 # Face Recognition App
 
 A versatile web application build using state of the art Face detection and recognition AI, providing you with following features :  
@@ -8,12 +11,27 @@ A versatile web application build using state of the art Face detection and reco
 
 ## Overview
 
+<img src = "https://github.com/kmitul/face_recognition_app/blob/main/Extras/pipeline.png">
+
 This was the project mainly aimed to construct a robust face recognition application with wide applications using state of the art facial detection and recognition techniques. 
 We have implemented various modules that construct the whole system, these modules are the following :
 
 1. Face analysis module 
 2. Web-Application module
 3. Database Module  
+
+### Face Analysis Module
+We designed a complete pipeline with detector backend as **Retina-Face** for detecting multiple faces present in the frame. We used **Arc-Face** and **VGG-Face** as models for generating face vectors. For mask detection we used **Xception** architecture and emotion and age detection model uses **VGG-Face** and **Alex-net** based architectures respectively.  
+
+### Web-Application Module
+
+We built a **Flask** Server Backend which runs the whole application by    integrating all the AI models, Database, Sheet APIs and frontend HTML files and scripts together.​ We used **MDBootstrap** framework whic handles all the UI designs of the      application.​ 
+**Javascripts** for establishing the duplex communication between client and the 	   	   	
+server by accessing client-side webcam and sending snaps as post request to the backend.
+
+### Database Module
+
+We stored facial embeddings of employees as JSON data.​ We Stored the attendance records of employees in Google Sheets.​ Used Sheets API for integration with the server.​ Finally extended the Google Sheet integration with **Tableau** dashboard.
 
 # Setup 
 
@@ -92,5 +110,3 @@ Run the app :
 ```
 python app.py
 ```
-
-
