@@ -5,9 +5,9 @@
 
 A versatile web application build using state of the art Face detection and recognition AI, providing you with following features :  
 
-- [:heavy_check_mark:] Face verification 
-- [:heavy_check_mark:] Face matching in the database
-- [:heavy_check_mark:] Attendence Marking 
+- [x] Face verification 
+- [x] Face matching in the database
+- [x] Attendence Marking 
 
 ## Overview
 
