@@ -28,5 +28,25 @@
         "ID": "6",
         "Department": "MAC",
         "Position": "Senior Engineer"
+    },
+    "Nomoto": {
+        "ID": "7",
+        "Department": "MAC",
+        "Position": "General Manager"
+    },
+    "Ukai": {
+        "ID": "8",
+        "Department": "MAC",
+        "Position": "Senior Engineer"
+    },
+     "Kaihou": {
+        "ID": "9",
+        "Department": "MAC",
+        "Position": "Senior Engineer"
+    },
+    "Hayase": {
+        "ID": "10",
+        "Department": "MAC",
+        "Position": "Senior Engineer"
     }
 }

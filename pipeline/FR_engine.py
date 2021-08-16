@@ -209,11 +209,11 @@ class FR_Engine(object):
                 , (facial_area[0], facial_area[1]), (255, 0, 0), 2)
 
             #highlight the landmarks
-            cv2.circle(input, tuple(landmarks["left_eye"]), 1, (0, 0, 255), -1)
-            cv2.circle(input, tuple(landmarks["right_eye"]), 1, (0, 0, 255), -1)
-            cv2.circle(input, tuple(landmarks["nose"]), 1, (0, 0, 255), -1)
-            cv2.circle(input, tuple(landmarks["mouth_left"]), 1, (0, 0, 255), -1)
-            cv2.circle(input, tuple(landmarks["mouth_right"]), 1, (0, 0, 255), -1)
+            cv2.circle(input, tuple(map(int, landmarks["left_eye"])), 1, (0, 0, 255), -1)
+            cv2.circle(input, tuple(map(int, landmarks["right_eye"])), 1, (0, 0, 255), -1)
+            cv2.circle(input, tuple(map(int, landmarks["nose"])), 1, (0, 0, 255), -1)
+            cv2.circle(input, tuple(map(int, landmarks["mouth_left"])), 1, (0, 0, 255), -1)
+            cv2.circle(input, tuple(map(int, landmarks["mouth_right"])), 1, (0, 0, 255), -1)
 
             return input
 
@@ -240,7 +240,7 @@ class FR_Engine(object):
         #verification
         verification = False
         
-        threshold = findThreshold(thresholds_mask,metric,self.model_name["Recognition"])
+        threshold = findThreshold(thresholds,metric,self.model_name["Recognition"])
 
         if distance <= threshold:
             verification = True

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="alert alert-warning"><h5>Employees Registered to the system</h5></div>
+
+<br>
+  <div class="container text-center">
+  	<table class='table table-striped' border='1'>
+
+  	  <tr class='thead-dark'>
+  	    <th scope="col">Employee ID</th>
+  	    <th scope="col">Employee Name</th>
+  	    <th scope="col">Position</th>
+  	    <th scope="col">Department</th>
+  	  </tr>
+
+  	  {% for user in users %}
+  	  <tr>
+        {% for col in user %}
+  	    <td>{{ col }}</td>
+  	     {% endfor %}
+  	  </tr>
+  	  {% endfor %}
+  	</table>
+  </div>
+
+{% endblock %}

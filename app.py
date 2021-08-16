@@ -17,9 +17,9 @@ from pipeline.compute_embeddings import Embedding_DB
 import cv2
 from pipeline.models import loadModel_emotion, loadModel_age, loadModel_mask
 from sheet_api.auth import add_info
-import string
-import random
-
+import string    
+import random   
+import json
 ################################### APP CONFIGURATION AND BASIC UTILITY ROUTES #######################################
 
 # Initializing the flask app
@@ -43,6 +43,7 @@ def team():
 @app.route('/static/bg/<path:filename>')
 def send_bg(filename):
     return send_from_directory(app._static_folder + '/bg', filename)
+
 
 ############################################### VERIFICATION FEATURE ###########################################################
 # Route resposible for the whole verification feature
@@ -72,13 +73,13 @@ def upload():
         # Sending the files as input to the FR Engine for detection process
         input_1 = io.imread(path1)
         input_2 = io.imread(path2)
-
+    
         faces1, aligned_faces1, org_img_1= engine.detection_process(input_1, verification_step = True)
         faces2, aligned_faces2, org_img_2 = engine.detection_process(input_2, verification_step = True)
 
         # Check when no faces are detected
         if type(faces1) == tuple or type(faces2) == tuple:
-
+            
             result = {
                         "verification" : -1,
                         "threshold" :-1,
@@ -90,10 +91,13 @@ def upload():
 
 
         output_1=engine.add_visuals_verify(org_img_1, faces1)
+        print("FACE 1:###############:",faces1)
+        print("FACE 2:###############:",faces2)
+
         output_2=engine.add_visuals_verify(org_img_2, faces2)
 
         result=engine.verify(aligned_faces1[0], aligned_faces2[0], 'cosine')
-
+        
         # CREATING PLOTS TO VISUALIZE THE PREDICTIONS
         fig = plt.figure()
 
@@ -115,10 +119,15 @@ def upload():
 
         # Sending the result back to the client
         return render_template('pred.html', plot = plotname, result = result)
+    
 
-
-
+    
     if request.method == 'GET':
+        # No more saving the plots on server
+        # Removing them as soon as user wants to try different images
+        filelist = glob.glob(os.path.join(app._static_folder, "plots", "*.png"))
+        for f in filelist:
+          os.remove(f)
         return render_template('compare.html')
 
 # Route  for sending the results of verification feature
@@ -128,6 +137,19 @@ def send_plot(filename):
 
 
 ############################################### RECOGNITION FEATURE ####################################################
+def age_group(age):
+    if age <= 12:
+        return "Child(0-12)"
+    elif age <= 19:
+        return "Teenager(13-19)"
+    elif age <= 28:
+        return "Youth(20-28)"
+    elif age <= 45:
+        return "Adult(29-45)"
+    elif age <= 65:
+        return "Middle Aged(46-45)"
+    else:
+        return "Senior Citizen(65+)"
 
 @app.route('/recog', methods=['GET','POST'])
 def recog():
@@ -147,10 +169,11 @@ def recog():
         for i in range(len(answer['mask'])):
             if(answer['mask'][i] == 1):
                 answer['mask'][i] = "Mask"
-            else :
+            else : 
                 answer['mask'][i] = "No Mask"
 
-
+        answer['age'][0] = age_group(answer['age'][0])
+        
         # Creating plot to visualze the predictons
         fig = plt.figure()
 
@@ -166,13 +189,13 @@ def recog():
         os.remove(path1)
 
         return render_template('pred_static.html', plot=plotname, result=answer)
-
+    
     if request.method == 'GET':
         # No more saving the plots on server
         # Removing them as soon as user wants to try different images
-        # filelist = glob.glob(os.path.join(app._static_folder, "plots", "*.png"))
-        # for f in filelist:
-        #   os.remove(f)
+        filelist = glob.glob(os.path.join(app._static_folder, "plots", "*.png"))
+        for f in filelist:
+          os.remove(f)
         return render_template('upload_recog.html')
 
 
@@ -207,12 +230,19 @@ def capture_pred():
         answer = engine.process_frame(image)
 
         # Logic for giving unique names to the predicted images
-        S = 10  # number of characters in the string.
-        ran = ''.join(random.choices(string.ascii_uppercase + string.digits, k = S))
+        S = 10  # number of characters in the string.  
+        ran = ''.join(random.choices(string.ascii_uppercase + string.digits, k = S))   
         plotname = 'result'+ str(ran) + '.jpg'
 
         # Saving the image which would be sent back to the client using above utility routes
         cv2.imwrite(os.path.join(app._static_folder,"results",plotname), answer["frame"])
+
+        # Setting the age-group
+        print(answer['age'])
+        print(age_group(answer['age'][0]))
+        
+        answer['age'][0] = age_group(answer['age'][0])
+
 
         # Calling Sheet API for storing the records of recognized users
         add_info(answer)
@@ -221,14 +251,26 @@ def capture_pred():
         for i in range(len(answer['mask'])):
             if(answer['mask'][i] == 1):
                 answer['mask'][i] = "Mask"
-            else :
+            else : 
                 answer['mask'][i] = "No Mask"
 
         # Rendering the response back to the frontend
         return render_template('pred_recognize.html', plot=plotname, result=answer)
-
+    
     else:
         return render_template('capture.html')
+
+@app.route('/users')
+def user_list():
+    f = open('./sheet_api/employee_info.json', 'r')
+    db = json.load(f)
+    i = 1
+    users = []
+    for name in db.keys():
+        users.append([db[name]['ID'], name, db[name]['Position'], db[name]['Department']])
+    # print(users)
+    return render_template('users.html', users = users)
+
 
 #############################################################################################################################
 
@@ -237,19 +279,19 @@ if __name__ == '__main__':
     # Detector Backend
     detector1 = RetinaFace(False, 0.4)
 
-    # Face Recognition Models
+    # Face Recognition Models 
     VGGFace_model = VGGFace.loadModel()
     VGGFace_model.load_weights('./pipeline/weights/vgg_face_weights.h5')
 
-    # Utility models
+    # Utility models 
     agemodel = loadModel_age()
     emomodel = loadModel_emotion()
     fmmodel = loadModel_mask()
-
+    
     print(f'Models Loaded!')
 
-    # Database Path
-    json_path = "./db/Otsuka.json"
+    # Database Path 
+    json_path = "./db/OtsukaFinal.json"
 
     # Initializing the FR engine
     engine = FR_Engine(detector1,
@@ -258,6 +300,7 @@ if __name__ == '__main__':
                        agemodel,
                        emomodel,
                        saved_embeddings_path=json_path)
-
-    # Enabled SSL context for allowing HTTPS(443) traffic in our application
+    
+    # Enabled SSL context for allowing HTTPS(443) traffic in our application 
     app.run(debug=False, host='0.0.0.0', port=443, ssl_context = 'adhoc')
+

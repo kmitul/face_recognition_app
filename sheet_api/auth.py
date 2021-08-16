@@ -26,15 +26,20 @@ def add_info(info, key=DEFAULT_KEY):
         if(mask[i] == 1):
             mask_status = "Mask"
 
-        id = employee_data[name]["ID"]
-        department = employee_data[name]["Department"]
-        position = employee_data[name]["Position"]
+        if name not in employee_data.keys():
+            id = "Unknown"
+            department = "Unknown"
+            position = "Unknown"
+        else:
+            id = employee_data[name]["ID"]
+            department = employee_data[name]["Department"]
+            position = employee_data[name]["Position"]
+
         remark = "Late" if ti.time() > morning_time.time() else "On Time"
         user = [id, name, department, position, date,
                 ti.strftime("%H:%M:%S"), remark, emotions[i]["dominant_emotion"]]
 
         worksheet.append_row(user)
         print("SUCCESSS")
-
 # ['Ronaldo', '2021-07-07', '14:58:34', 26.86828502598559, 0, 'neutral']
 # add_info(['Ronaldo', '2021-07-07', '14:58:34', 26.86828502598559, 0, 'neutral'])
