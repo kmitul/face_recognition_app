@@ -295,7 +295,7 @@ if __name__ == '__main__':
     print(f'Models Loaded!')
 
     # Database Path 
-    json_path = "./db/OtsukaFinal.json"
+    json_path = "./db/OtsukaDB.json"
 
     # Initializing the FR engine
     engine = FR_Engine(detector1,
