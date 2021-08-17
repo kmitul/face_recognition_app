@@ -33,7 +33,7 @@ server by accessing client-side webcam and sending snaps as post request to the 
 
 We stored facial embeddings of employees as JSON data.​ We Stored the attendance records of employees in Google Sheets.​ Used Sheets API for integration with the server.​ Finally extended the Google Sheet integration with **Tableau** dashboard.
 
-An [**example**](https://public.tableau.com/app/profile/awshesh/viz/Book1_16250642806280/Dashboard1) dashboard. 
+An [example](https://public.tableau.com/app/profile/awshesh/viz/Book1_16250642806280/Dashboard1) dashboard. 
 
 # Setup 
 
