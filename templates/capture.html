@@ -1,7 +1,11 @@
+<!-- THIS FILE HANDLES THE CAPTURING OF CLIENT'S IMAGE FROM WEBCAM, SENDS IT TO SERVER AND REDIRECTS THE CLIENT TO THE PREDICTIONS PAGE -->
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- IMPORTING JQUERY MINIFIED JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<!-- THE SCRIPT RESPONSIBLE TO ACCESS THE CLIENT'S CAMERA AND THEN SEND THE TAKEN SNAPSHOT TO THE SERVER SIDE FOR PREDICTION USING AI MODELS  -->
 <script async>
   (function() {
   // The width and height of the captured photo. We will set the
@@ -19,14 +23,15 @@
   // The various HTML elements we need to configure or control. These
   // will be set by the startup() function.
 
+  // Some additional helpful variables
   var video = null;
   var canvas = null;
   var photo = null;
   var startbutton = null;
   var submitbutton = null;
-
   var snap = null;
 
+  //  Startup process which contains various event listeners and util functions for capturing snapshots from client's webcam 
   function startup() {
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
@@ -74,9 +79,7 @@
       function(){
         var context = canvas.getContext('2d');
         context.drawImage(video, 0,0,canvas.width, canvas.height);
-       
-       
-       
+
         function redirectPost(url, data) {
           var form = document.createElement('form');
           document.body.appendChild(form);
@@ -141,6 +144,7 @@
 
 </script>
 
+<!-- Layout for showing camera feed, taken screenshot and Submit button -->
 <div class="contentarea">
 
   <h3>Capture your picture for verification</h3>
@@ -149,33 +153,23 @@
     <video id="video">Video stream not available.</video>
 
     <br>
-
     <img id="photo" alt="The screen capture will appear in this box.">
-
-    <!-- <div class="output">
-    </div> -->
-
     <br>
 
-    <!-- <input type="text" id="txt" value="caption"></input> -->
-
     <hr>
-
     <button id="startbutton" class="btn blue-gradient">Take photo</button>
-
     <hr>
 
-      <div class="submitclass">
-      <input type="button" name="" id="submitbutton" value="Submit Photo" class="btn aqua-gradient"></input>
+    <div class="submitclass">
+    <input type="button" name="" id="submitbutton" value="Submit Photo" class="btn aqua-gradient"></input>
     </div>
-<hr>
+    <hr>
   </div>
 
   </div>
 
 	<canvas id="canvas" hidden>
   </canvas>
-
 
 </div>
 

@@ -1,14 +1,15 @@
+<!-- THIS FILE TAKES TWO IMAGES FROM THE USERS, SENDS TO THE SERVER AND REDIRECTS THE USERS TO PREDICTION ROUTE -->
 {% extends 'base.html' %}
 
 {% block content %}
 
 
     <h4> Upload two photos to verify them </h4>
-
+            <!-- THIS FORM ACCEPTS TWO IMAGES AND SENDS TO THE SERVER ON CLICK OF VERIFICATION BUTTON -->
             <form action="/compare" method="POST" enctype="multipart/form-data">
 
               <ol>
-
+              
               <h5> <li> Add First Image </li></h5>
               <br>
               <input type='file' class="joint" name='file1' />
@@ -26,10 +27,8 @@
 
             <hr class="my-4">
 
-
+          <!-- THIS SCRIPT DYNAMICALLY DISPLAYS THE UPLOADED IMAGE FILE BESIDE THE INPPUT FIELD -->
           <script type="text/javascript">
-
-
 
             function readURL(input) {
             if (input.files && input.files[0]) {
@@ -52,6 +51,7 @@
 
         </div>
 
+        <!-- SETTING THE LAYOUT -->
         <style media="screen">
           .mycontent{
             text-align: center;

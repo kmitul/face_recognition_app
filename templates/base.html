@@ -1,9 +1,11 @@
+<!-- THE BASE TEMPLATE FOR THE WHOLE APPLICATION WHICH CONSISTS OF TITLE, NAV BUTTONS, FOOTER, ETC. WHICH WILL BE COMMON FOR EACH FILE AND WILL BE INHERITED IN THEM -->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
 
   <meta charset="utf-8">
-  <!-- bootstrap cdn -->
+  <!-- bootstrap4 cdn -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -25,7 +27,7 @@
 
 
   <body>
-<!-- url('/static/bg/bg2.jpg') -->
+<!-- NAVBAR WITH TITLE AND BUTTONS FOR EASY NAVIGATION THROUGHOUT THE APP -->
     <div class="jumbotron card card-image" style="background-image: url('/static/bg/bg2.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover; ">
       <div class="text-white text-center py-5 px-4">
         <div>
@@ -39,17 +41,15 @@
             }
           </style>
 
+        <!-- BUTTONS LINKED TO INDEX AND TEAM PAGES -->
         <a href="/team"><button type="button" class="btn peach-gradient">Team</button> </a>
         <a href="/"><button type="button" class="btn peach-gradient">Home</button> </a>
-        <!-- <a href="/"><button type="button" class="btn peach-gradient">Mentors</button> </a> -->
-
-
 
         </div>
       </div>
     </div>
 
-
+    <!-- CONTAINER SECTION WHICH CAN BE USED BY ANY FILES TO INHERIT THE BASE TEMPLATE -->
     <div class="container mycontent">
 
      
@@ -60,6 +60,7 @@
 
     </div>
 
+    <!-- SOME STYLING TO MAKE THE LAYOUT LOOK BETTER -->
     <style media="screen">
       .mycontent{
         text-align: center;

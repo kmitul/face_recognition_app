@@ -1,7 +1,8 @@
+<!-- THIS SCRIPT SHOWS THE VISUALISATION OF THE PREDICTED PERSON FROM RECOGNIZE YOURSELF FEATURE -->
 {% extends 'base.html' %}
 
 {% block content %}
-
+    <!-- WHEN PERSON IS UNIDENTIFIED -->
     {% if result['employee'][0] == "UI" %}
 
       <div class="alert alert-danger" role="alert">
@@ -9,15 +10,17 @@
       </div>
 
     {% else %}
-
+    <!-- WHEN PERSON IS IDENTIFIED   -->
     {% if result['employee'][0] %}
-
+    
+    <!-- GREETING -->
     <hr>
       <div class="alert alert-success" role="alert">
         <strong> Hello, {{ result['employee'][0] }}! Hope you have a great day! </strong>
       </div>
     <hr>
-
+    
+    <!-- TELLING WHEN MASK IS NOT WORN -->
     {% if result['mask'][0] == "Mask" %}
     <div class="alert alert-secondary" role="alert">
       <strong>We could not predict your mood because of mask! We hope you are happy! </strong>
@@ -25,14 +28,18 @@
     <hr>
     {% endif %}
 
+    <!-- SHOWING THE VISUALISATIONS IN TABULAR FORMAT -->
     <div class="container">
       <div class="row">
 
+        <!-- UPLOADED PICTURE WITH LANDMARKS AND BOUNDING BOXES -->
         <div class="col"><img src="static/plots/{{plot}}" alt="" height="250px" width="225px"></div>
 
+        <!-- IF MASK IS WORN, PREDICT HAPPY MOOD ALWAYS :) (BEING OPTIMISTIC)-->
         {% if result['mask'][0] == "Mask" %}
 
         <div class="col">
+          <!-- EMOTION CLASSIFICATION PROGRESSBAR -->
           <strong>
           <div class="progress md-progress">
             <div class="progress-bar bg-success" role="progressbar" style="color : black; width: 100%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">HAPPY(100%)</div>
@@ -65,7 +72,7 @@
         </div>
 
         <div class="w-100"></div>
-
+        <!-- PERSON'S NAME, AGE GROUP, MASK STATUS AND DOMINANT EMOTION (Set as Happy(100%) here ) -->
         <div class="col alert alert-primary"><strong>{{result["employee"][0]}} - {{result["age"][0]}} - {{result["mask"][0]}} </strong></div>
         <div class="col alert alert-warning">MOOD: <strong style="text-transform: uppercase;">HAPPY</strong></div>
 
@@ -73,6 +80,7 @@
         {% else %}
         <div class="col">
           <strong>
+          <!-- EMOTION CLASSIFICATION PROGRESSBAR -->
           <div class="progress md-progress">
             <div class="progress-bar bg-success" role="progressbar" style="color : black; width: {{ result['emotions'][0]['emotion']['happy'] }}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">HAPPY({{ result['emotions'][0]['emotion']['happy'] }}%)</div>
           </div>
@@ -106,7 +114,7 @@
      
 
         <div class="w-100"></div>
-
+        <!-- PERSON'S NAME, AGE GROUP, MASK STATUS AND DOMINANT EMOTION  -->
         <div class="col alert alert-primary"><strong>{{result["employee"][0]}} - Age: {{result["age"][0]}} - {{result["mask"][0]}} </strong></div>
         <div class="col alert alert-warning">MOOD: <strong style="text-transform: uppercase;">{{result["emotions"][0]["dominant_emotion"]}}</strong></div>
 
@@ -117,19 +125,18 @@
     </div>
 
     {% else %}
+    <!-- CORNER CASE OF WHEN RECOGNITION IS FAILED -->
       <div class="alert alert-danger" role="alert">
         <strong> Recognition Failed! </strong>
       </div>
     
     {% endif %}
 
-
-  
     <br>
-  
-
 
     {% endif %}
+
+    <!-- RETURN BACK TO RECONGNIZE ROUTE -->
     <hr>
     <a href="/recog"> <button type="button" name="button" class="btn blue-gradient">Click here to try again</button> </a>
     <hr>

@@ -1,9 +1,9 @@
+<!-- TO VISUALIZE THE PREDICTIONS MADE ON COMPARISON OF TWO UPLOADED IMAGES  -->
 {% extends 'base.html' %}
 
 {% block content %}
 
-    <!-- <h5> verification: {{ result['verification'] }} Score: {{ result['score']}}</h5> -->
-
+    <!-- WHEN NO FACES ARE DETECTED WE ARE SENDING PLOT VALUE -1 -->
     {% if plot == "-1" %}
       
       <div class="alert alert-danger" role="alert">
@@ -11,29 +11,31 @@
       </div>
 
     {% else %}  
-    
+    <!-- CHECK IF VERIFICATION IS DONE SUCCESSFULLY -->
     {% if result['verification'] %}
       <div class="alert alert-success" role="alert">
         <strong> Faces Successfully Verified! </strong>
       </div>
-
+    <!-- FOR FAILED VERIFICATION -->
     {% else %}
       <div class="alert alert-danger" role="alert">
         <strong> Verification Failed! </strong>
       </div>
     {% endif %}
-
+    <!-- SHOWING THE COSINE DISTANCE OBTAINED -->
     <div class="alert alert-primary" role="alert">
     Cosine Distance: <strong>{{ result['distance'] }}</strong>. 
     Threshold Value: <strong>{{ result['threshold'] }}</strong>
     </div>
-
+    
+    <!-- DISPLAYING THE PLOT WITH FACIAL LANDMARKS AND BOUNDING BOXES -->
     <hr>
     <h5>Facial landmarks and bounding boxes are displayed in the following plot:</h5>
     <img src="static/plots/{{ plot }}" class="pred" style ="margin: auto">
    
     {% endif %}    
-   
+
+    <!-- REDIRECT TO VERIFICATION FEATURE -->
     <hr>
     <a href="/compare"><button type="button" class="btn purple-gradient">Click here to Try Again</button></a>   
     <hr>

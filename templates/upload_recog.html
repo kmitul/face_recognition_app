@@ -1,10 +1,11 @@
+<!-- THIS FILE ALLOWS USERS TO UPLOAD THE PIC, SENDS IT TO SERVER FOR PREDICTIONS AND REDIRECTS TO THE VISUALIZATION PAGE(pred_static.html)  -->
 {% extends 'base.html' %}
 
 {% block content %}
 
-
 <h4> Upload your photo to match yourself from the database </h4>
 
+<!-- FORM FOR ACCEPTING THE IMAGE FROM THE CLIENT -->
 <form action="/recog" method="POST" enctype="multipart/form-data">
 
   <ol>
@@ -21,10 +22,8 @@
 
 <hr class="my-4">
 
-
+<!-- THIS SCRIPT DYNAMICALLY DISPLAYS THE UPLOADED IMAGE FILE BESIDE THE INPPUT FIELD -->
 <script type="text/javascript">
-
-
 
   function readURL(input) {
     if (input.files && input.files[0]) {
@@ -46,7 +45,8 @@
 </script>
 
 </div>
-
+  
+<!-- SETTING THE LAYOUT -->
 <style media="screen">
   .mycontent {
     text-align: center;

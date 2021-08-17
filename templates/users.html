@@ -1,3 +1,4 @@
+<!-- IT TAKES THE INFORMATION ABOUT REGISTERED USERS FROM SERVER SIDE AND DISPLAYS IT IN TABULAR FORMAT -->
 {% extends 'base.html' %}
 
 {% block content %}
@@ -6,8 +7,9 @@
 
 <br>
   <div class="container text-center">
+	<!-- TABLE CONTAINING ENTRIES OF USERS(EMPLOYEES) -->
   	<table class='table table-striped' border='1'>
-
+	<!-- HEAD ROW -->
   	  <tr class='thead-dark'>
   	    <th scope="col">Employee ID</th>
   	    <th scope="col">Employee Name</th>
@@ -15,6 +17,7 @@
   	    <th scope="col">Department</th>
   	  </tr>
 
+	<!-- ENTRIES -->
   	  {% for user in users %}
   	  <tr>
         {% for col in user %}
