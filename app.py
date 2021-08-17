@@ -89,11 +89,9 @@ def upload():
             os.remove(path2)
             return render_template('pred.html', plot = "-1", result = result)
 
-
+        
+        # Adding Visuals
         output_1=engine.add_visuals_verify(org_img_1, faces1)
-        print("FACE 1:###############:",faces1)
-        print("FACE 2:###############:",faces2)
-
         output_2=engine.add_visuals_verify(org_img_2, faces2)
 
         result=engine.verify(aligned_faces1[0], aligned_faces2[0], 'cosine')
@@ -172,6 +170,7 @@ def recog():
             else : 
                 answer['mask'][i] = "No Mask"
 
+        # Setting age group based on the user's age
         answer['age'][0] = age_group(answer['age'][0])
         
         # Creating plot to visualze the predictons
@@ -258,13 +257,18 @@ def capture_pred():
         return render_template('pred_recognize.html', plot=plotname, result=answer)
     
     else:
+        # Capturing the image in case of GET request
         return render_template('capture.html')
 
+# Feature to list down all the registered users in the database
 @app.route('/users')
 def user_list():
+    # Reading users from our database
     f = open('./sheet_api/employee_info.json', 'r')
     db = json.load(f)
     i = 1
+
+    # Preparing entries in frontend-friendly format
     users = []
     for name in db.keys():
         users.append([db[name]['ID'], name, db[name]['Position'], db[name]['Department']])

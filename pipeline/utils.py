@@ -1,3 +1,4 @@
+############################################ Imports ###############################################################
 from skimage.transform import resize
 import cv2
 import numpy as np
@@ -11,7 +12,7 @@ from tensorflow.python.ops.gen_math_ops import approximate_equal
 
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
-
+############################################ Globals ###############################################################
 DEFAULT_MODEL_NAME = {
     'Detection': 'RetinaFace',
     'Alignment_Detection': 'FAN',
@@ -352,3 +353,4 @@ def get_embeddings(path):
 
     return known_names, known_encodings
 
+###################################################################################################################

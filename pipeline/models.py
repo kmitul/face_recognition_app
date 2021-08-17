@@ -1,3 +1,4 @@
+############################################ Imports ###############################################################
 from deepface import DeepFace
 from deepface.basemodels import VGGFace
 from pathlib import Path
@@ -20,6 +21,8 @@ elif tf_version == 2:
 
 base_dir = os.path.join(os.getcwd(),"pipeline")
 
+############################################ Function definitions ###############################################################
+# function for loading pretrained emotion detection model 
 def loadModel_emotion():
 
 	num_classes = 7
@@ -56,6 +59,7 @@ def loadModel_emotion():
 
 	return model
 
+# function for loading pretrained age approximation model 
 def loadModel_age():
 
 	model = VGGFace.baseModel()
@@ -83,8 +87,11 @@ def loadModel_age():
 
 	#--------------------------
 
+# function for loading pretrained mask detection model 
 def loadModel_mask():
 
 	face_mask_model = load_model(os.path.join(base_dir,"weights","Xception-size-64-bs-32-lr-0.0001.h5"))
 
 	return face_mask_model
+
+###################################################################################################################

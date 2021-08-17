@@ -1,3 +1,4 @@
+############################################ Imports ###############################################################
 import os
 from pipeline.utils import DEFAULT_MODEL_NAME
 from pipeline.utils import make_path_dicts
@@ -8,7 +9,7 @@ from pipeline.utils import store_embeddings
 import numpy as np
 import cv2
 
-
+############################################ Class Definition ###############################################################
 class Embedding_DB(object):
     def __init__(self,
                  detection_model,
@@ -96,3 +97,5 @@ class Embedding_DB(object):
         self.known_Encodings = known_Encodings
         self.known_Names = known_Names
         store_embeddings(known_Names, known_Encodings, self.database_path)
+
+#####################################################################################################################

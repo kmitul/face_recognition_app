@@ -1,3 +1,4 @@
+############################################ Imports ###############################################################
 from pipeline.utils import DEFAULT_MODEL_NAME, mask_dict, thresholds, thresholds_mask
 from pipeline.utils import make_path_dicts, compare_encodings
 from pipeline.utils import align_face, detect_faces_alpha
@@ -8,7 +9,7 @@ from deepface.commons import functions, distance as dst
 import numpy as np
 import cv2
 import time
-
+############################################ Class definition ###############################################################
 class FR_Engine(object):
     '''
     Pipeline
@@ -187,7 +188,6 @@ class FR_Engine(object):
                 image = cv2.putText(image, "No Mask", (x, h + 15), cv2.FONT_HERSHEY_SIMPLEX,
                 0.5, (0, 0, 255), 2)
                 image = cv2.rectangle(image, (w, h), (x, y), (0, 0, 255), 1)
-                # print("in here")
             
             # image = cv2.rectangle(image, (w, h), (x, y), (0, 255, 0), 1)
 
@@ -219,12 +219,6 @@ class FR_Engine(object):
 
 
     def verify(self,img1, img2, metric):
-        
-        # img1 = resizingimage(img1, model_name)
-        # img2 = resizingimage(img2, model_name)
-
-        # img1_embedding = model.predict(img1)[0]
-        # img2_embedding = model.predict(img2)[0]
 
         img1_embedding,_,_ = generate_embedding(img1,self.FR_model,self.model_name["Recognition"],self.age_model,self.emo_model,self.emotion_labels)
         img2_embedding,_,_ = generate_embedding(img2,self.FR_model,self.model_name["Recognition"],self.age_model,self.emo_model,self.emotion_labels)
@@ -321,3 +315,5 @@ class FR_Engine(object):
             return 1 
         
         return 0
+
+################################################################################################################
