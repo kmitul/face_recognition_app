@@ -3,7 +3,7 @@
 
 # Face Recognition App
 
-A versatile web application build using state of the art Face detection and recognition AI, providing you with following features :  
+A versatile web application build using cutting edge Face detection and recognition AI, providing you with following features :  
 
 - [x] Face verification 
 - [x] Face matching in the database
@@ -32,6 +32,8 @@ server by accessing client-side webcam and sending snaps as post request to the 
 ### Database Module
 
 We stored facial embeddings of employees as JSON data.​ We Stored the attendance records of employees in Google Sheets.​ Used Sheets API for integration with the server.​ Finally extended the Google Sheet integration with **Tableau** dashboard.
+
+An [example](https://public.tableau.com/app/profile/awshesh/viz/Book1_16250642806280/Dashboard1) dashboard. 
 
 # Setup 
 
