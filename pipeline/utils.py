@@ -12,6 +12,7 @@ from tensorflow.python.ops.gen_math_ops import approximate_equal
 
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
+
 ############################################ Globals ###############################################################
 DEFAULT_MODEL_NAME = {
     'Detection': 'RetinaFace',
@@ -55,7 +56,6 @@ thresholds_mask = {
 def findThreshold(thresholds, metric, model):
     return thresholds[model][metric]
 
-
 def make_path_dicts(paths: list):
     names = []
     person_2_path_dict = {}
@@ -68,7 +68,7 @@ def make_path_dicts(paths: list):
 
     return person_2_path_dict
 
-
+# function to compare two vectors using various metrics 
 def compare_encodings(img1_embedding, img2_embedding,
                       metric, model_name, thresholds_set=thresholds):
     if metric == 'cosine':
@@ -92,7 +92,6 @@ def compare_encodings(img1_embedding, img2_embedding,
 #################################################
 #################################################
 
-
 def draw_bounding_box(frame, landmarks):
     h, w, c = frame.shape
     bb = []
@@ -115,7 +114,6 @@ def draw_bounding_box(frame, landmarks):
             bb.append((x_min, y_min, x_max, y_max))
     return frame, bb
 
-
 def bounding_box_crop_fan(img, bb: list):
     X = bb[0]
     Y = bb[1]
@@ -123,7 +121,6 @@ def bounding_box_crop_fan(img, bb: list):
     H = bb[3] - bb[1]
     cropped_image = img[Y:Y + H, X:X + W]
     return cropped_image
-
 
 def detect_faces_fan(input, model):
     faces = []
@@ -155,12 +152,10 @@ def alignment_procedure(img, left_eye, right_eye, nose):
     left_eye_x, left_eye_y = left_eye
     right_eye_x, right_eye_y = right_eye
 
-    # -----------------------
     upside_down = False
     if nose[1] < left_eye[1] or nose[1] < right_eye[1]:
         upside_down = True
 
-    # -----------------------
     # find rotation direction
 
     if left_eye_y > right_eye_y:
@@ -170,14 +165,11 @@ def alignment_procedure(img, left_eye, right_eye, nose):
         point_3rd = (left_eye_x, right_eye_y)
         direction = 1  # rotate inverse direction of clock
 
-    # -----------------------
     # find length of triangle edges
 
     a = findEuclideanDistance(np.array(left_eye), np.array(point_3rd))
     b = findEuclideanDistance(np.array(right_eye), np.array(point_3rd))
     c = findEuclideanDistance(np.array(right_eye), np.array(left_eye))
-
-    # -----------------------
 
     # apply cosine rule
 
@@ -187,7 +179,6 @@ def alignment_procedure(img, left_eye, right_eye, nose):
         angle = np.arccos(cos_a)  # angle in radian
         angle = (angle * 180) / math.pi  # radian to degree
 
-        # -----------------------
         # rotate base image
 
         if direction == -1:
@@ -199,10 +190,7 @@ def alignment_procedure(img, left_eye, right_eye, nose):
         img = Image.fromarray(img)
         img = np.array(img.rotate(direction * angle))
 
-    # -----------------------
-
     return img
-
 
 def align_face(obj, img, align=True):
 
@@ -259,7 +247,6 @@ def detect_faces_alpha(input, model,
 #################################################
 #################################################
 
-
 def resizingimage(img, model_name):
     if (model_name == 'VGG-Face'):
         image_resized = resize(img, (224, 224), anti_aliasing=True)
@@ -283,6 +270,7 @@ def findApparentAge(age_predictions):
 	apparent_age = np.sum(age_predictions * output_indexes)
 	return apparent_age
 
+# function to generate embeddings for the given FR model 
 def generate_embedding(img1, model, model_name, age_model, emo_model, emotion_labels):
     emo_obj = {}
 
@@ -334,7 +322,6 @@ def store_embeddings(known_names, known_encodings, save_path):
 
         orDict[name].append(enc)
 
-    # print(orDict)
 
     with open(save_path, 'w') as fp:
         json.dump(dict(orDict), fp)
