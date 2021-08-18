@@ -48,14 +48,6 @@ The above bash script -
 2. Setups the backend for Retinaface model
 3. Downloads the pre-trained weights of Detection, Recognition, Masks, Age and Emotion models.
 
-## How to use
-
-Run the app : 
-```
-conda activate fr-teamc
-python app.py
-```
-
 ## Here are the links for the model weights
 The required models get stored in pipeline/weights file in our codebase. We provide the google drive links in case of external use - 
 
@@ -117,3 +109,10 @@ Alternatively, the link to the same is given below:
 https://drive.google.com/file/d/1YPrAuQ1_CpVhloXXXa8QuTrFk5KE76Id/view?usp=sharing
 ```
 
+## How to use
+
+Run the app : 
+```
+conda activate fr-teamc
+python app.py
+```
