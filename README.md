@@ -37,16 +37,27 @@ An [example](https://public.tableau.com/app/profile/awshesh/viz/Book1_1625064280
 
 # Setup 
 
-Run following commands in terminal opened in the project directory to run the app.
+Run following commands in terminal opened in the project directory to build the installation dependencies.
 
-Create a new virtual environment and install the required packages : 
 ```
-pip install -r requirements.txt
+source init_script.sh
 ```
 
-## Download Pretrained Model Weights
+The above bash script - 
+1. Installs the requred conda environments and creates a conda environment fr-teamc
+2. Setups the backend for Retinaface model
+3. Downloads the pre-trained weights of Detection, Recognition, Masks, Age and Emotion models.
 
-Download the weights from the google drive link below and save them into pipeline/weights directory before running the code.
+## How to use
+
+Run the app : 
+```
+conda activate fr-teamc
+python app.py
+```
+
+## Here are the links for the model weights
+The required models get stored in pipeline/weights file in our codebase. We provide the google drive links in case of external use - 
 
 ### Face Detectors 
 
@@ -106,9 +117,3 @@ Alternatively, the link to the same is given below:
 https://drive.google.com/file/d/1YPrAuQ1_CpVhloXXXa8QuTrFk5KE76Id/view?usp=sharing
 ```
 
-## How to use
-
-Run the app : 
-```
-python app.py
-```
