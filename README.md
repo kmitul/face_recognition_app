@@ -44,7 +44,7 @@ source init_script.sh
 ```
 
 The above bash script - 
-1. Installs the requred conda environments
+1. Installs the requred conda environments and creates a conda environment fr-teamc
 2. Setups the backend for Retinaface model
 3. Downloads the pre-trained weights of Detection, Recognition, Masks, Age and Emotion models.
 
@@ -52,6 +52,7 @@ The above bash script -
 
 Run the app : 
 ```
+conda activate fr-teamc
 python app.py
 ```
 
