@@ -1,25 +1,29 @@
 ##################### IMPORTING ALL REQUIRED PACKAGES FOR THE APPLICATION #############################################
+import os
+import string    
+import random   
+import json
+import time
+import glob
+import base64
+
+import numpy as np
+import cv2
+from skimage import io
+import matplotlib.pyplot as plt
+from PIL import Image
+
 from flask import Flask, render_template, request, url_for, send_from_directory, session
+from werkzeug.utils import redirect, secure_filename
+
+import face_alignment
 from pipeline.RetinaFacetf2.src.retinafacetf2.retinaface import RetinaFace
 from deepface.basemodels import VGGFace
 from keras.models import load_model
 from pipeline.FR_engine import FR_Engine
-import cv2
-import face_alignment
-from werkzeug.utils import redirect, secure_filename
-import matplotlib.pyplot as plt
-import os
-import numpy as np
-import time
-from skimage import io
-import glob
 from pipeline.compute_embeddings import Embedding_DB
-import cv2
 from pipeline.models import loadModel_emotion, loadModel_age, loadModel_mask
 from sheet_api.auth import add_info
-import string    
-import random   
-import json
 ################################### APP CONFIGURATION AND BASIC UTILITY ROUTES #######################################
 
 # Initializing the flask app
@@ -74,20 +78,20 @@ def upload():
         input_1 = io.imread(path1)
         input_2 = io.imread(path2)
     
-        faces1, aligned_faces1, org_img_1= engine.detection_process(input_1, verification_step = True)
-        faces2, aligned_faces2, org_img_2 = engine.detection_process(input_2, verification_step = True)
+        faces1, aligned_faces1, org_img_1 = engine.detection_process(input_1, verification_step=True)
+        faces2, aligned_faces2, org_img_2 = engine.detection_process(input_2, verification_step=True)
 
         # Check when no faces are detected
         if type(faces1) == tuple or type(faces2) == tuple:
             
             result = {
-                        "verification" : -1,
-                        "threshold" :-1,
-                        "distance" : -1
+                        "verification": -1,
+                        "threshold": -1,
+                        "distance": -1
                     }
             os.remove(path1)
             os.remove(path2)
-            return render_template('pred.html', plot = "-1", result = result)
+            return render_template('pred.html', plot="-1", result=result)
 
         
         # Adding Visuals
@@ -99,24 +103,24 @@ def upload():
         # CREATING PLOTS TO VISUALIZE THE PREDICTIONS
         fig = plt.figure()
 
-        ax1 = fig.add_subplot(1,2,1)
+        ax1 = fig.add_subplot(1, 2, 1)
         plt.axis('off')
         plt.imshow(output_1)
 
-        ax2 = fig.add_subplot(1,2,2)
+        ax2 = fig.add_subplot(1, 2, 2)
         plt.axis('off')
         plt.imshow(output_2)
 
         # Some trivial logic to uniquely name the prediction files
-        plotname = 'result'+ fn1.split('.')[0] + fn2.split('.')[0]+'.png'
-        plt.savefig(app._static_folder +'/plots/'+ plotname)
+        plotname = 'result' + fn1.split('.')[0] + fn2.split('.')[0]+'.png'
+        plt.savefig(app._static_folder + '/plots/' + plotname)
 
         # REMOVING THE UPLOADED IMAGE AFTER THE WORK IS DONE
         os.remove(path1)
         os.remove(path2)
 
         # Sending the result back to the client
-        return render_template('pred.html', plot = plotname, result = result)
+        return render_template('pred.html', plot=plotname, result=result)
     
 
     
@@ -199,9 +203,6 @@ def recog():
 
 
 ##################################### ATTENDANCE MARKING APP ###########################################################
-from skimage import io
-from PIL import Image
-import base64
 
 
 # Route for serving the static Javascript files
