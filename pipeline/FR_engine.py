@@ -1,4 +1,4 @@
-############################################ Imports ###############################################################
+# Getting the required imports
 from pipeline.utils import DEFAULT_MODEL_NAME, mask_dict, thresholds, thresholds_mask
 from pipeline.utils import make_path_dicts, compare_encodings
 from pipeline.utils import align_face, detect_faces_alpha
@@ -12,7 +12,7 @@ import time
 ############################################ Class definition ###############################################################
 
 class FR_Engine(object):
-    '''
+    """
     Pipeline
     1) Detection - [RetinaFace]
       1.1) Single Face - exception - [FaceAlignment]
@@ -35,7 +35,7 @@ class FR_Engine(object):
 
     RetinaFace - detection
     Haardcascade OpenCV
-    '''
+    """
 
     def __init__(
             self,
@@ -49,6 +49,19 @@ class FR_Engine(object):
             model_name: dict = DEFAULT_MODEL_NAME,
             alignment_model=None,
             **kwargs):
+        """
+        Params
+        ------
+        detection_model1: Consist of the Model to handle object detection
+        recognition_model: Consist of the Model to handle face recognition
+        mask_model: Consist of the Model to predict if masks are worn
+        Age_model: Model to predict the age
+        emo_model: Model to predict the age
+        database_path: Path to the embedding vectors
+        saved_embeddings_path: Path to saving the embeddings
+        model_name: Dictionary specifying which models are being used.
+            Ex- {'Recognition': 'VGG-Face'}
+        """
         self.model_name = model_name
         self.width_size = 640
         self.fixed_height = 480
@@ -65,7 +78,7 @@ class FR_Engine(object):
         self.saved_embeddings_path = saved_embeddings_path  # json_path
         self.database_path = database_path
 
-        # Miscelleneous 
+        # Miscelleneous
         self.emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
         self.initialise_models()
 
@@ -91,8 +104,8 @@ class FR_Engine(object):
         # Initialize Util Models
         blank_image_e = np.ones((1, 48, 48, 1), np.uint8)
 
-        _ = self.age_model.predict(blank_image_r)[0,:]
-        _ = self.emo_model.predict(blank_image_e)[0,:]
+        _ = self.age_model.predict(blank_image_r)[0, :]
+        _ = self.emo_model.predict(blank_image_e)[0, :]
         print("set emo and age!")
         # Initialise Mask Model
 
@@ -109,13 +122,13 @@ class FR_Engine(object):
         print("Loaded Embeddings Directly")
         print(f"Initialistion done in {time.time() - t1}s")
 
-    def process_frame(self, frame, verification_step = False):
+    def process_frame(self, frame, verification_step=False):
         '''
         process the full frame here
         '''
 
         t1 = time.time()
-        boxes, aligned_faces, org_img = self.detection_process(frame, verification_step = verification_step)  # 0.4
+        boxes, aligned_faces, org_img = self.detection_process(frame, verification_step=verification_step)  # 0.4
         print(f"Detection done in {time.time() - t1}s")
         t1 = time.time()
         bounding_boxes, identities, mask_status, ages, emotions = self.recognition_process(boxes, aligned_faces)  # 0.1
@@ -205,11 +218,12 @@ class FR_Engine(object):
             facial_area = identity["facial_area"]
             landmarks = identity["landmarks"]
 
-            #highlight facial area
-            cv2.rectangle(input, (facial_area[2], facial_area[3])
-                , (facial_area[0], facial_area[1]), (255, 0, 0), 2)
+            # highlight facial area
+            cv2.rectangle(
+                input, (facial_area[2], facial_area[3]),
+                (facial_area[0], facial_area[1]), (255, 0, 0), 2)
 
-            #highlight the landmarks
+            # highlight the landmarks
             cv2.circle(input, tuple(map(int, landmarks["left_eye"])), 1, (0, 0, 255), -1)
             cv2.circle(input, tuple(map(int, landmarks["right_eye"])), 1, (0, 0, 255), -1)
             cv2.circle(input, tuple(map(int, landmarks["nose"])), 1, (0, 0, 255), -1)
@@ -219,10 +233,14 @@ class FR_Engine(object):
             return input
 
 
-    def verify(self,img1, img2, metric):
+    def verify(self, img1, img2, metric):
 
-        img1_embedding,_,_ = generate_embedding(img1,self.FR_model,self.model_name["Recognition"],self.age_model,self.emo_model,self.emotion_labels)
-        img2_embedding,_,_ = generate_embedding(img2,self.FR_model,self.model_name["Recognition"],self.age_model,self.emo_model,self.emotion_labels)
+        img1_embedding, _, _ = generate_embedding(
+            img1, self.FR_model, self.model_name["Recognition"], 
+            self.age_model, self.emo_model, self.emotion_labels)
+        img2_embedding, _, _ = generate_embedding(
+            img2, self.FR_model, self.model_name["Recognition"], 
+            self.age_model, self.emo_model, self.emotion_labels)
 
         if metric == 'cosine':
             distance = dst.findCosineDistance(img1_embedding, img2_embedding)
@@ -231,8 +249,7 @@ class FR_Engine(object):
         elif metric == 'euclidean_l2':
             distance = dst.findEuclideanDistance(dst.l2_normalize(img1_embedding), dst.l2_normalize(img2_embedding))
         
-        #------------------------------
-        #verification
+        # verification
         verification = False
         
         threshold = findThreshold(thresholds,metric,self.model_name["Recognition"])
@@ -317,4 +334,3 @@ class FR_Engine(object):
         
         return 0
 
-################################################################################################################
